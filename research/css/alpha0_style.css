@@ -1,0 +1,183 @@
+.wrap {
+/*  background: red;*/
+/*  width:100%;*/
+}
+.grid_14 {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.grid_10 {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+nav {
+  margin: 14px 0 10px;
+  height: 40px;
+  /*background: orange;*/
+}
+nav ul{
+  float: right;
+  margin: 0;
+}
+nav li { 
+  display: inline; 
+  margin-left: 0;
+  margin-right: 30px;
+  font-size: 22px;
+}
+nav a {
+  text-decoration: none;
+  color: #999;
+}
+nav a:hover {
+  text-decoration: underline;
+  color: #f1f1f1;
+}
+aside {
+/*  background: green;*/
+  float: right;
+  margin: 0;
+}
+.primary {
+/*  background: #e3e3e3;*/
+}
+header {
+/*  background: yellow;*/
+  background: #111;
+/*  width:70%;*/
+}
+header h1 {
+  color: white;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  padding-left: 15px;
+  height: 40px;
+}
+.main {
+  margin: 30px 0px;
+  /*width:70%;*/
+  float:center;
+}
+/*.container_24 .grid_24{
+  width:100%;
+}*/
+img {
+  margin: 0;
+  margin-bottom: 5px;
+}
+hr {
+  margin: 5px 0 5px;
+  color: black;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+h5 {
+  font-size:200%;
+}
+p {
+  font-size:150%;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+  transition: margin-left 3s;
+  padding: 20px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+.bodyButton{
+  position: fixed; /* Fixed/sticky position */
+  z-index: 99; /* Make sure it does not overlap */
+  border: none; /* Remove borders */
+  outline: none; /* Remove outline */
+  background-color: #111; /* Set a background color */
+  color: white; /* Text color */
+  cursor: pointer; /* Add a mouse pointer on hover */
+  padding: 8px; /* Some padding */
+  border-radius: 30%; /* Rounded corners */
+  font-size: 24px; /* Increase font size */
+}
+.bodyButton:hover{
+  background-color: #555;
+}
+#toTopBtn{
+  display: none; /* Hidden by default */
+  top: 18px; /* Place the button at the top of the page */
+  right: 30px; /* Place the button 30px from the right */
+  font-size: 24px; /* Increase font size */
+  /*padding: 15px; /* Some padding */
+}
+#opnSideNavBtn{
+  top: 25px; /* Place the button at the top of the page */
+  left: 30px; /* Place the button 30px from the left */
+  font-size: 24px; /* Increase font size */
+}
+/* tHE side navigation menu */
+.sidenav {
+  height: 90%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: #111; /* Black*/
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 70px; /* Place content 60px from the top */
+  transition: 1s; /* 0.5 second transition effect to slide in the sidenav */
+}
+/* Style the sidenav links and the dropdown button */
+.sidenav a, .dropdown-btn {
+  width:100%;
+  padding: 6px 8px 6px 16px;
+/*  padding: 8px 8px 8px 32px;*/
+  text-decoration: none;
+  text-align: left;
+  display: block;
+  font-size: 25px;
+  color: #818181;
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+  transition: 0.45s; 
+}
+/* Add an active class to the active dropdown button */
+.active {
+  background-color: green;
+  color: white;
+}
+/* Dropdown container (hidden by default). Optional: add a lighter
+/* background color and some left padding to change the design of the
+/* dropdown content */
+.dropdown-container {
+  display: none;
+  background-color: #262626;
+  padding-left: 40px;
+}
+
+/* Optional: Style the caret down icon */
+.fa-caret-down {
+  float: right;
+  padding-right: 10px;
+}
+.fa-caret-right {
+  float: left;
+  padding-right: 10px;
+}
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover, .dropdown-btn:hover {
+  color: #f1f1f1;
+}
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+  width: 10%;
+  position: absolute;
+  top: 0;
+  left: 0px;
+  font-size: 46px;
+  margin-left: 70%;
+}
