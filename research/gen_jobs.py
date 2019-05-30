@@ -13,6 +13,9 @@ for line in fileinput.input():
   [ mydict[field].append(linedict[field]) for field in fields ]
   N += 1
         
+Nrun = mydict['ST'].count('RUNNING')
+Npend = mydict['ST'].count('PENDING')
+
 code = """<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,7 +43,8 @@ code = """<!DOCTYPE html>
 
     <div class="main clearfix">
       <div class="primary grid_24">
-        <h3 class="info">Currently Running Jobs: 1</h3>
+        <h3 class="info">Currently Running Jobs: {}</h3>
+        <h3 class="info">Currently Pending Jobs: {}</h3>
         <table>
           <tbody>
             <tr>
@@ -72,7 +76,7 @@ code = """<!DOCTYPE html>
                 <h4>Comment</h4>
               </th>
             </tr>
-"""
+""".format(Nrun,Npend)
 
 for j in range(0,N):
   code +="""            <tr>
