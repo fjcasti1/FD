@@ -29,7 +29,7 @@ html_header(){
       <nav class="grid_10">
         <ul>
           <li><a href="#">Home</a></li>
-          <li><a href="jobs.html" target="_blank">Jobs</a></li>
+          <li><a href="jobs.html">Jobs</a></li>
           <li><a href="#">Contact</a></li>
         </ul>
       </nav>

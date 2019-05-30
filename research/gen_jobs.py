@@ -36,7 +36,7 @@ code = """<!DOCTYPE html>
       <nav class="grid_10">
         <ul>
           <li><a href="#">Home</a></li>
-          <li><a href="alpha0.html" target="_blank">Results</a></li>
+          <li><a href="alpha0.html">Results</a></li>
         </ul>
       </nav>
     </header>
