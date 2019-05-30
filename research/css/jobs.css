@@ -46,12 +46,27 @@ header {
   background: #111;
 /*  width:70%;*/
 }
+table {
+  margin-left: auto;
+  margin-right: auto;
+  border: 3px solid black;
+  border-collapse: collapse;
+}
+table h4 {
+  margin: 0px;
+}
+table h5 {
+  margin: 0px;
+}
 header h1 {
   color: white;
   margin-top: 12px;
   margin-bottom: 12px;
   padding-left: 15px;
-  height: 40px;
+}
+h3.info {
+  color:red;
+  margin-left: 5px;
 }
 .main {
   margin: 30px 0px;
@@ -70,9 +85,6 @@ hr {
   color: black;
   border: 1px solid black;
   border-radius: 5px;
-}
-h5 {
-  font-size:200%;
 }
 p {
   font-size:150%;
@@ -187,5 +199,17 @@ th {
   color: ivory;
   text-align: center;
   padding: 5px;
+  display: table-cell;
+  vertical-align: center;
+  font-weight: bold;
+}
+
+td {
+  border: 1px solid black;
+  text-align: right;
+  padding: 5px;
+  /* background-color: #E3D0C6; */
+  background-color: DarkSalmon;
+  text-align: center;
 }
 

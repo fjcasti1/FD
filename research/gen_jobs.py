@@ -1,4 +1,19 @@
-<!DOCTYPE html>
+import fileinput, os
+
+# ssh agave 'mq' | tail -n +2 | python jobs.py
+OUTFILE = '/home/kiko/public_html/Website/research/jobs.html'
+
+fields = ['jobID','partition','jobName','ST','t','tLim',
+    'nodes','CPUcores','comment']
+N = 0
+mydict = dict((field,[]) for field in fields)
+for line in fileinput.input():
+  linelist = [item for item in line.strip('\n').split(' ') if item]
+  linedict = dict((fields[i],linelist[i]) for i in range(0,len(fields)))
+  [ mydict[field].append(linedict[field]) for field in fields ]
+  N += 1
+        
+code = """<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -25,48 +40,60 @@
 
     <div class="main clearfix">
       <div class="primary grid_24">
-        <h1>Currently Running Jobs: 1</h1>
+        <h3 class="info">Currently Running Jobs: 1</h3>
         <table>
           <tbody>
             <tr>
               <th>
-                <h1>Job ID</h1>
+                <h4>Job ID</h4>
               </th>
               <th>
-                <h1>Partition</h1>
+                <h4>Partition</h4>
               </th>
               <th>
-                <h1>Job Name</h1>
+                <h4>Job Name</h4>
               </th>
               <th>
-                <h1>Status</h1>
+                <h4>Status</h4>
               </th>
               <th>
-                <h1>Time Used</h1>
+                <h4>Time Used</h4>
               </th>
               <th>
-                <h1>Time Limit</h1>
+                <h4>Time Limit</h4>
               </th>
               <th>
-                <h1>Nodes</h1>
+                <h4>Nodes</h4>
               </th>
               <th>
-                <h1>CPU Cores</h1>
+                <h4>CPU Cores</h4>
               </th>
               <th>
-                <h1>Comment</h1>
+                <h4>Comment</h4>
               </th>
             </tr>
-            <tr>
-            </tr>
-          </tbody>
+"""
+
+for j in range(0,N):
+  code +="""            <tr>
+"""
+  for field in fields:
+    code +="""              <td>
+                <h5>{}</h5>
+              </td>
+""".format(mydict[field][j])
+  code +="""            </tr>
+"""
+
+code +="""          </tbody>
         </table>
-
-
-
-
       </div>
     </div>
   </div>
 </body>
 </html>
+"""
+
+with open(OUTFILE,"w") as f:
+  f.write("%s" % code)
+  f.close()
