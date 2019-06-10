@@ -181,3 +181,6 @@ p {
   font-size: 46px;
   margin-left: 70%;
 }
+video {
+  padding-bottom: 10px;
+}
