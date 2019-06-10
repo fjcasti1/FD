@@ -12,7 +12,7 @@ html_head(){
   <link rel="stylesheet" href="css/960_24_col.css">
   <link rel="stylesheet" href="css/text.css">
   <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="css/alpha0_style.css">
+  <link rel="stylesheet" href="css/monitor.css">
   <script src="js/jquery-3.4.1.min.js"></script>
   <script src="js/navigation.js"></script>
   <title>Zero Forcing Results</title>
@@ -115,18 +115,31 @@ __EOF
           ${str}
         </p>
 
-        <img class="grid_24"
-          src="imgs/ts${rec}"
-          alt="urts">
+        <video class="grid_8 alpha" autoplay muted loop id="myVideo">
+          <source src="movies/s${rec}"
+            type="video/mp4">
+        </video>
+        <video class="grid_8" autoplay muted loop id="myVideo">
+          <source src="movies/x${rec}"
+            type="video/mp4">
+        </video>
+        <video class="grid_8 omega" autoplay muted loop id="myVideo">
+          <source src="movies/g${rec}"
+            type="video/mp4">
+        </video>
 
-        <img class="grid_24"
-          src="imgs/fft${rec}"
-          alt="urts">
-
-        <img class="grid_24"
-          src="imgs/orbit${rec}"
-          alt="urts">
-
+        <video class="grid_8 alpha" autoplay muted loop id="myVideo">
+          <source src="movies/s_pert${rec}"
+            type="video/mp4">
+        </video>
+        <video class="grid_8" autoplay muted loop id="myVideo">
+          <source src="movies/x_pert${rec}"
+            type="video/mp4">
+        </video>
+        <video class="grid_8 omega" autoplay muted loop id="myVideo">
+          <source src="movies/g_pert${rec}"
+            type="video/mp4">
+        </video>
 __EOF
 }
 html_footer(){
@@ -142,7 +155,7 @@ __EOF
 # are the same, written exactly the same. Example:
 #   Bo = 1e1, Re = 1e1  --> Does not work well
 #   Bo = 1e1, Re = 10e0 --> Works well!
-movies=$(find movies -type f -iname '*.mp4' -exec basename {} \; | awk 'BEGIN{FS="_"} {gsub("Bo","",$0); gsub("Re","",$0); gsub($1,"",$0); print $0}' | sort -u -t "_" -gk 3,3 -k 2,2 | awk 'BEGIN{FS="_"} {gsub($2,"Re"$2,$0); gsub($3,"Bo"$3,$0); gsub($1,"",$0); print $0}')
+movies=$(find movies/ -type f -iname '*.mp4' -not -iname '*pert*' -exec basename {} \; | awk 'BEGIN{FS="_"} {gsub("Bo","",$0); gsub("Re","",$0); gsub($1,"",$0); print $0}' | sort -u -t "_" -gk 3,3 -k 2,2 | awk 'BEGIN{FS="_"} {gsub($2,"Re"$2,$0); gsub($3,"Bo"$3,$0); gsub($1,"",$0); print $0}')
 IFS=$'\n' inputmovies=($movies)
 
 html_head > $out
@@ -151,7 +164,7 @@ html_sideNav ${inputmovies[@]} # This function appends from python
 html_main >> $out
 
 for mov in $movies; do
-  html_movies "$movies" >> $out
+  html_movies "$mov" >> $out
 done
 
 html_footer >> $out
