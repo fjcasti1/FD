@@ -73,9 +73,12 @@ hr {
 }
 h5 {
   font-size:200%;
+  margin-bottom: 10px;
 }
 p {
   font-size:150%;
+  margin-top: 25px;
+  margin-bottom: 10px;
 }
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
