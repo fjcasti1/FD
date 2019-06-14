@@ -115,28 +115,28 @@ __EOF
           ${str}
         </p>
 
-        <video class="grid_8 alpha" autoplay muted loop id="myVideo">
+        <video class="grid_8 alpha" autoplay muted loop controls id="myVideo">
           <source src="movies/s${rec}"
             type="video/mp4">
         </video>
-        <video class="grid_8" autoplay muted loop id="myVideo">
+        <video class="grid_8" autoplay muted loop controls id="myVideo">
           <source src="movies/x${rec}"
             type="video/mp4">
         </video>
-        <video class="grid_8 omega" autoplay muted loop id="myVideo">
+        <video class="grid_8 omega" autoplay muted loop controls id="myVideo">
           <source src="movies/g${rec}"
             type="video/mp4">
         </video>
 
-        <video class="grid_8 alpha" autoplay muted loop id="myVideo">
+        <video class="grid_8 alpha" autoplay muted loop controls id="myVideo">
           <source src="movies/s_pert${rec}"
             type="video/mp4">
         </video>
-        <video class="grid_8" autoplay muted loop id="myVideo">
+        <video class="grid_8" autoplay muted loop controls id="myVideo">
           <source src="movies/x_pert${rec}"
             type="video/mp4">
         </video>
-        <video class="grid_8 omega" autoplay muted loop id="myVideo">
+        <video class="grid_8 omega" autoplay muted loop controls id="myVideo">
           <source src="movies/g_pert${rec}"
             type="video/mp4">
         </video>
