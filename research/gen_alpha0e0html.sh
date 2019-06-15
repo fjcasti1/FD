@@ -29,11 +29,45 @@ html_header(){
       <nav class="grid_10">
         <ul>
           <li><a href="#">Home</a></li>
+          <li>
+            <button class="dropbtn" id="MenuDropBtn"
+              onclick="activateMenuDropdown(this)">Results
+              <i class="fa fa-caret-down"></i>
+          </li>
           <li><a href="jobs.html">Jobs</a></li>
-          <li><a href="#">Contact</a></li>
         </ul>
       </nav>
     </header>
+__EOF
+}
+html_menu(){
+  cat << __EOF
+    <div class="menu clearfix" id="MegaMenu">
+      <div class="header">
+        <h1>Knife Edge Viscosimeter</h1>
+      </div>
+      <div class="grid_8 alpha">
+        <h3>Monitors</h3>
+        <ul>
+          <li><a href="monitor_alpha0e0.html">&alpha; = 0e0</a></li>
+          <li><a href="monitor_alpha1e-2.html">&alpha; = 1e-2</a></li>
+          <li><a href="monitor_alpha1e-1.html">&alpha; = 1e-1</a></li>
+        </ul>
+      </div>
+      <div class="grid_8">
+        <h3>Videos</h3>
+        <ul>
+          <li><a href="movies_alpha0e0.html">&alpha; = 0e0</a></li>
+          <li><a href="movies_alpha1e-2.html">&alpha; = 1e-2</a></li>
+          <li><a href="movies_alpha1e-1.html">&alpha; = 1e-1</a></li>
+        </ul>
+      </div>
+      <div class="grid_8 omega">
+        <h3>Other</h3>
+        <ul>
+        </ul>
+      </div>
+    </div>
 __EOF
 }
 
@@ -147,6 +181,7 @@ IFS=$'\n' inputpngs=($pngs)
 
 html_head > $out
 html_header >> $out
+html_menu >> $out
 html_sideNav ${inputpngs[@]} # This function appends from python 
 html_main >> $out
 
