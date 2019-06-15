@@ -1,6 +1,6 @@
 #!/usr/bin/env/ bash
 
-out="alpha0.html"
+out="alpha0e0.html"
 html_head(){
   cat << __EOF
 <!DOCTYPE html>
@@ -142,7 +142,7 @@ __EOF
 # are the same, written exactly the same. Example:
 #   Bo = 1e1, Re = 1e1  --> Does not work well
 #   Bo = 1e1, Re = 10e0 --> Works well!
-pngs=$(find imgs -type f -iname '*.png' -exec basename {} \; | awk 'BEGIN{FS="_"} {gsub("Bo","",$0); gsub("Re","",$0); gsub($1,"",$0); print $0}' | sort -u -t "_" -gk 3,3 -k 2,2 | awk 'BEGIN{FS="_"} {gsub($2,"Re"$2,$0); gsub($3,"Bo"$3,$0); gsub($1,"",$0); print $0}')
+pngs=$(find imgs -type f -iname '*alpha0e0*.png' -exec basename {} \; | awk 'BEGIN{FS="_"} {gsub("Bo","",$0); gsub("Re","",$0); gsub($1,"",$0); print $0}' | sort -u -t "_" -gk 3,3 -k 2,2 | awk 'BEGIN{FS="_"} {gsub($2,"Re"$2,$0); gsub($3,"Bo"$3,$0); gsub($1,"",$0); print $0}')
 IFS=$'\n' inputpngs=($pngs)
 
 html_head > $out
