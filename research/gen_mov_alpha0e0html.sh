@@ -1,6 +1,6 @@
 #!/usr/bin/env/ bash
 
-out="movies_alpha0.html"
+out="movies_alpha0e0.html"
 html_head(){
   cat << __EOF
 <!DOCTYPE html>
@@ -29,11 +29,45 @@ html_header(){
       <nav class="grid_10">
         <ul>
           <li><a href="#">Home</a></li>
+          <li>
+            <button class="dropbtn" id="MenuDropBtn"
+              onclick="activateMenuDropdown(this)">Results
+              <i class="fa fa-caret-down"></i>
+          </li>
           <li><a href="jobs.html">Jobs</a></li>
-          <li><a href="#">Contact</a></li>
         </ul>
       </nav>
     </header>
+__EOF
+}
+html_menu(){
+  cat << __EOF
+    <div class="menu clearfix" id="MegaMenu">
+      <div class="header">
+        <h1>Knife Edge Viscosimeter</h1>
+      </div>
+      <div class="grid_8 alpha">
+        <h3>Monitors</h3>
+        <ul>
+          <li><a href="monitor_alpha0e0.html">&alpha; = 0e0</a></li>
+          <li><a href="monitor_alpha1e-2.html">&alpha; = 1e-2</a></li>
+          <li><a href="monitor_alpha1e-1.html">&alpha; = 1e-1</a></li>
+        </ul>
+      </div>
+      <div class="grid_8">
+        <h3>Videos</h3>
+        <ul>
+          <li><a href="movies_alpha0e0.html">&alpha; = 0e0</a></li>
+          <li><a href="movies_alpha1e-2.html">&alpha; = 1e-2</a></li>
+          <li><a href="movies_alpha1e-1.html">&alpha; = 1e-1</a></li>
+        </ul>
+      </div>
+      <div class="grid_8 omega">
+        <h3>Other</h3>
+        <ul>
+        </ul>
+      </div>
+    </div>
 __EOF
 }
 
@@ -155,11 +189,12 @@ __EOF
 # are the same, written exactly the same. Example:
 #   Bo = 1e1, Re = 1e1  --> Does not work well
 #   Bo = 1e1, Re = 10e0 --> Works well!
-movies=$(find movies/ -type f -iname '*.mp4' -not -iname '*pert*' -exec basename {} \; | awk 'BEGIN{FS="_"} {gsub("Bo","",$0); gsub("Re","",$0); gsub($1,"",$0); print $0}' | sort -u -t "_" -gk 3,3 -k 2,2 | awk 'BEGIN{FS="_"} {gsub($2,"Re"$2,$0); gsub($3,"Bo"$3,$0); gsub($1,"",$0); print $0}')
+movies=$(find movies/ -type f -iname '*alpha0e0*.mp4' -not -iname '*pert*' -exec basename {} \; | awk 'BEGIN{FS="_"} {gsub("Bo","",$0); gsub("Re","",$0); gsub($1,"",$0); print $0}' | sort -u -t "_" -gk 3,3 -k 2,2 | awk 'BEGIN{FS="_"} {gsub($2,"Re"$2,$0); gsub($3,"Bo"$3,$0); gsub($1,"",$0); print $0}')
 IFS=$'\n' inputmovies=($movies)
 
 html_head > $out
 html_header >> $out
+html_menu >> $out
 html_sideNav ${inputmovies[@]} # This function appends from python 
 html_main >> $out
 

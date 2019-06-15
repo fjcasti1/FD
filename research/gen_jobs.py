@@ -26,20 +26,54 @@ code = """<!DOCTYPE html>
   <link rel="stylesheet" href="css/text.css">
   <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/jobs.css">
+  <link rel="stylesheet" href="css/monitor.css">
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/navigation.js"></script>
   <meta http-equiv="refresh" content="30">
   <title>Agave Jobs Information</title>
 </head>
 <body>
   <div class="wrap container_24">
     <header class="clearfix">
-      <h1 class="grid_14">Agave Jobs Information</h1>
+      <h1 class="grid_14">Zero Forcing Results</h1>
       <nav class="grid_10">
         <ul>
           <li><a href="#">Home</a></li>
-          <li><a href="alpha0.html">Results</a></li>
+          <li>
+            <button class="dropbtn" id="MenuDropBtn"
+              onclick="activateMenuDropdown(this)">Results
+              <i class="fa fa-caret-down"></i>
+          </li>
+          <li><a href="jobs.html">Jobs</a></li>
         </ul>
       </nav>
     </header>
+    <div class="menu clearfix" id="MegaMenu">
+      <div class="header">
+        <h1>Knife Edge Viscosimeter</h1>
+      </div>
+      <div class="grid_8 alpha">
+        <h3>Monitors</h3>
+        <ul>
+          <li><a href="monitor_alpha0e0.html">&alpha; = 0e0</a></li>
+          <li><a href="monitor_alpha1e-2.html">&alpha; = 1e-2</a></li>
+          <li><a href="monitor_alpha1e-1.html">&alpha; = 1e-1</a></li>
+        </ul>
+      </div>
+      <div class="grid_8">
+        <h3>Videos</h3>
+        <ul>
+          <li><a href="movies_alpha0e0.html">&alpha; = 0e0</a></li>
+          <li><a href="movies_alpha1e-2.html">&alpha; = 1e-2</a></li>
+          <li><a href="movies_alpha1e-1.html">&alpha; = 1e-1</a></li>
+        </ul>
+      </div>
+      <div class="grid_8 omega">
+        <h3>Other</h3>
+        <ul>
+        </ul>
+      </div>
+    </div>
 
     <div class="main clearfix">
       <div class="primary grid_24">
