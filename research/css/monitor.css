@@ -45,6 +45,58 @@ nav .dropbtn:hover {
   text-decoration: underline;
   color: #f1f1f1;
 }
+.menu {
+  display: none;
+  width: 960px;
+  background-color: #bbb;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.show{
+  display: block;
+  position: absolute;
+}
+
+.menu .header {
+  background-color: green;
+  vertical-align: baseline;
+  color: white;
+  padding: 16px 16px 1px 16px; /* Top, Right, Bottom, Left */
+}
+.menu ul {
+  list-style: none;
+}
+.menu ul li{
+  margin: 8px 0px 8px 0;
+}
+.menu .alpha{
+  padding-left: 5px;
+}
+.menu h3 {
+  margin-top: 15px;
+  margin-bottom: 15px
+}
+.menu a{
+  text-decoration: none;
+  color: black;
+  font-size: 16px;
+  padding: 8px 16px 8px 16px;
+  transition: font-weight .5s;
+  transition: background-color .7s;
+}
+/*.menu li:hover{
+  background-color: #d2d2d2;
+}*/
+.menu a:hover{
+  text-decoration: underline;
+  color: black;
+  background-color: #d2d2d2;
+  font-weight: bold;
+}
+  
+
+
 
 
 
