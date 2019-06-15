@@ -67,3 +67,16 @@ $(document).ready(function(){
     $("#opnSideNavBtn").fadeIn(450);
   });
 });
+
+/* Dropdown MegaMenu */
+function activateMenuDropdown(dropdownObj) {
+  var dropdown = document.getElementById("MegaMenu");
+  dropdown.classList.toggle("show")
+/*  dropdownContent = dropdown.nextElementSibling;
+  if (dropdownContent.style.display === "block") {
+    dropdownContent.style.display = "none";
+  } 
+  else {
+    dropdownContent.style.display = "block";
+  }*/
+}

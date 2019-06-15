@@ -45,9 +45,29 @@ nav .dropbtn:hover {
   text-decoration: underline;
   color: #f1f1f1;
 }
+.menu {
+  display: none;
+  width: 960px;
+  background-color: #ccc;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.show{
+  display: block;
+  position: absolute;
+}
 
-
-
+.menu .menuHeader {
+  background-color: green;
+  color: white;
+}
+.menu ul {
+  list-style: none;
+}
+.menu li:hover{
+  background-color: #f9f9f9;
+}
 
 aside {
 /*  background: green;*/
