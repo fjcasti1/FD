@@ -1,6 +1,6 @@
 #!/usr/bin/env/ bash
 
-out="alpha0e0.html"
+out="monitor_alpha0e0.html"
 html_head(){
   cat << __EOF
 <!DOCTYPE html>
