@@ -71,7 +71,17 @@ $(document).ready(function(){
 /* Dropdown MegaMenu */
 function activateMenuDropdown(dropdownObj) {
   var dropdown = document.getElementById("MegaMenu");
+/*  if (dropdown.style.display === "none") {
+    dropdown.style.display = "block";
+    setTimeout(function() {
+      dropdown.style.opacity = 1;
+    }, 20);
+  } 
+  else {
+    dropdown.style.display = "block";
+  }*/
   dropdown.classList.toggle("show")
+/*  document.getElementById("MegaMenu").style.display = "block";*/
 /*  dropdownContent = dropdown.nextElementSibling;
   if (dropdownContent.style.display === "block") {
     dropdownContent.style.display = "none";

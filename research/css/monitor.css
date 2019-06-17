@@ -47,15 +47,17 @@ nav .dropbtn:hover {
 }
 .menu {
   display: none;
+  position: absolute;
   width: 960px;
   background-color: #bbb;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
+  z-index: 99; /* Make sure it does not overlap */
 }
 .show{
+  opacity: 1;
   display: block;
-  position: absolute;
 }
 
 .menu .header {
@@ -85,9 +87,6 @@ nav .dropbtn:hover {
   transition: font-weight .5s;
   transition: background-color .7s;
 }
-/*.menu li:hover{
-  background-color: #d2d2d2;
-}*/
 .menu a:hover{
   text-decoration: underline;
   color: black;
