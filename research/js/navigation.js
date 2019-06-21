@@ -12,6 +12,17 @@ function activateDropdown(dropdownObj) {
     dropdownContent.style.display = "block";
   }
 }
+function activateDropdown2(dropdownObj) {
+  var dropdown = document.getElementById(dropdownObj.id);
+  dropdown.classList.toggle("active2")
+  dropdownContent = dropdown.nextElementSibling;
+  if (dropdownContent.style.display === "block") {
+    dropdownContent.style.display = "none";
+  } 
+  else {
+    dropdownContent.style.display = "block";
+  }
+}
 
 /* Set the width of the side navigation to 250px */
 function openNav() {
@@ -22,6 +33,16 @@ function openNav() {
 /* Set the width of the side navigation to 0 */
 function closeNav() {
   document.getElementById("SideNav").style.width = "0";
+  var dropdowns = document.getElementsByClassName("dropdown-btn2 active2");
+    for (var i = dropdowns.length-1; i>-1; i--) {
+        dropdowns[i].classList.toggle("active2")
+    }
+  var contents = document.getElementsByClassName("dropdown-container2");
+    for (var i = 0; i < contents.length; i++) {
+        if (contents[i].style.display === "block") {
+          contents[i].style.display = "none";
+        } 
+    }
   var dropdowns = document.getElementsByClassName("dropdown-btn active");
     for (var i = dropdowns.length-1; i>-1; i--) {
         dropdowns[i].classList.toggle("active")

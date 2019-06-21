@@ -215,10 +215,31 @@ p {
   outline: none;
   transition: 0.45s; 
 }
+.sidenav a, .dropdown-btn2 {
+  width:100%;
+  padding: 6px 8px 6px 16px;
+/*  padding: 8px 8px 8px 32px;*/
+  text-decoration: none;
+  text-align: center;
+  display: block;
+  font-size: 25px;
+  color: #818181;
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+  transition: 0.45s; 
+}
 /* Add an active class to the active dropdown button */
 .active {
+  background-color: darkgreen;
+  color: white;
+  font-weight:bold;
+}
+.active2 {
   background-color: green;
   color: white;
+  font-style: italic;
 }
 /* Dropdown container (hidden by default). Optional: add a lighter
 /* background color and some left padding to change the design of the
@@ -226,7 +247,13 @@ p {
 .dropdown-container {
   display: none;
   background-color: #262626;
-  padding-left: 40px;
+/*  padding-left: 40px;*/
+}
+.dropdown-container2 {
+  display: none;
+  background-color: #363636;
+  text-align: right;
+/*  padding-left: 40px;*/
 }
 
 /* Optional: Style the caret down icon */
