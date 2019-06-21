@@ -12,6 +12,7 @@ __EOF
 )
 
 html_head(){
+  alphaValue="$1"
   cat << __EOF
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +26,7 @@ html_head(){
   <link rel="stylesheet" href="css/monitor.css">
   <script src="js/jquery-3.4.1.min.js"></script>
   <script src="js/navigation.js"></script>
-  <title>Time Series Monitors</title>
+  <title>Monitor &alpha; = $alphaValue</title>
 </head>
 __EOF
 }
@@ -275,7 +276,7 @@ do
   out="monitor_alpha${alpha}.html"
   echo "$out"
   search pngs "$alpha"       # call function to populate the array
-  html_head > $out
+  html_head $alpha > $out
   html_header >> $out
   html_menu >> $out
   if [[ $alpha == '0e0' ]]; then
