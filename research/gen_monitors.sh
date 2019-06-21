@@ -81,7 +81,7 @@ html_menu(){
 __EOF
 }
 
-html_sideNav(){
+html_sideNav0(){
   arr=("$@")
   python << __EOF
 def getValue(token,str):
@@ -130,6 +130,77 @@ with open("$out","a+") as f:
 __EOF
 }
 
+html_sideNav(){
+  arr=("$@")
+  python << __EOF
+def getValue(token,str):
+  return str.strip('.png').split(token)[-1].split('_')[0]
+
+def writeDropdownBtn(Bo):
+  code = """
+      <button class="dropdown-btn" id="Bo{}"
+        onclick="activateDropdown(this)">Bo = {}
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-container">""".format(Bo,Bo)
+  return code
+
+def writeDropdownContent1(Bo,Re):
+  code = """
+        <button class="dropdown-btn2" id="Bo{}_Re{}"
+          onclick="activateDropdown2(this)">Re = {}
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container2">""".format(Bo,Re,Re)
+  return code
+
+def writeDropdownContent2(Bo,Re,f):
+  code = """
+          <a href="#Bo{}_Re{}_f{}">f = {}</a>""".format(Bo,Re,f,f)
+  return code
+
+input = "${arr[@]}"
+list = input.split()
+code = """
+    <aside id="SideNav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" id="clsSideNavBtn" onclick="closeNav()">&times;</a>i"""
+
+Bo = getValue('Bo',list[0])
+Re = getValue('Re',list[0])
+code+= writeDropdownBtn(Bo)
+code+= writeDropdownContent1(Bo,Re)
+
+for item in list:
+  f = getValue('f',item)
+  if Bo == getValue('Bo',item):
+    if Re == getValue('Re',item):
+      code+= writeDropdownContent2(Bo,Re,f)
+    else:
+      Re = getValue('Re',item)
+      code+="""
+        </div>"""
+      code+= writeDropdownContent1(Bo,Re)
+      code+= writeDropdownContent2(Bo,Re,f)
+  else:
+    Bo = getValue('Bo',item)
+    Re = getValue('Re',item)
+    code+="""
+        </div>
+      </div>"""
+    code+= writeDropdownBtn(Bo)
+    code+= writeDropdownContent1(Bo,Re)
+    code+= writeDropdownContent2(Bo,Re,f)
+code+="""
+        </div>
+      </div>
+    </aside>
+"""
+with open("$out","a+") as f:
+  f.write("%s" % code)
+  f.close()
+__EOF
+}
+
 html_main(){
   cat << __EOF
     <div class="main clearfix">
@@ -149,10 +220,13 @@ values = dict()
 for token in tokens:
   values[token] = name.split(token)[-1].split('_')[0]
 if values['f'] == '0e0':
-  values['f'] = '0'
+  ftitle = '0'
 else:
-  values['f'] = values['f'].lstrip('0')
-print('<b id="Bo{}_Re{}">&alpha; = {} | Bo = {} | Re = {} | <i>f</i> = {}</b>'.format(values["Bo"],values["Re"],values["alpha"],values["Bo"],values["Re"],values["f"]))
+  ftitle = values['f'].lstrip('0')
+if values['alpha'] == '0e0':
+  print('<b id="Bo{}_Re{}">&alpha; = {} | Bo = {} | Re = {} | <i>f</i> = {}</b>'.format(values["Bo"],values["Re"],values["alpha"],values["Bo"],values["Re"],ftitle))
+else:
+  print('<b id="Bo{}_Re{}_f{}">&alpha; = {} | Bo = {} | Re = {} | <i>f</i> = {}</b>'.format(values["Bo"],values["Re"],values["f"],values["alpha"],values["Bo"],values["Re"],ftitle))
 __EOF
 2>&1)
   cat << __EOF
@@ -198,19 +272,22 @@ search() {
 
 for alpha in ${alphaList[@]}
 do
-  out="monitor_alpha${alpha}test.html"
+  out="monitor_alpha${alpha}.html"
+  echo "$out"
   search pngs "$alpha"       # call function to populate the array
   html_head > $out
   html_header >> $out
   html_menu >> $out
-#  if [[ $alpha == '0e0' ]]; then
-  html_sideNav ${pngs[@]} # This function appends from python 
-#  fi
+  if [[ $alpha == '0e0' ]]; then
+    html_sideNav0 ${pngs[@]} # This function appends from python 
+    echo "Zero"
+  else
+    html_sideNav ${pngs[@]} # This function appends from python 
+    echo "Not zero"
+  fi
   html_main >> $out
   
-  rm "alpha${alpha}test.out"
   for png in ${pngs[@]}; do
-    echo "$png" >> "alpha${alpha}test.out"
     html_figures "$png" >> $out
   done
   
