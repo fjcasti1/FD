@@ -1,9 +1,19 @@
 #!/usr/bin/env/ bash
 
-alphaList=$(python <<__EOF
+declare -a alphaList=$(python <<__EOF
 from glob import glob
 alphaList=[]
 for f in glob('imgs/*'):
+  alpha = f.split('alpha')[-1].split('_')[0]
+  if alpha not in alphaList:
+    print(alpha)
+    alphaList.append(alpha)
+__EOF
+)
+declare -a alphaMovieList=$(python <<__EOF
+from glob import glob
+alphaList=[]
+for f in glob('movies/*'):
   alpha = f.split('alpha')[-1].split('_')[0]
   if alpha not in alphaList:
     print(alpha)
@@ -52,25 +62,33 @@ html_header(){
 __EOF
 }
 html_menu(){
-  cat << __EOF
-    <div class="menu clearfix" id="MegaMenu">
+  declare -a figList=($1)
+  declare -a movList=($2)
+  python << __EOF
+figList="${figList[@]}".split()
+figList.sort()
+movList="${movList[@]}".split()
+movList.sort()
+code = """    <div class="menu clearfix" id="MegaMenu">
       <div class="header">
         <h1>Knife Edge Viscosimeter</h1>
       </div>
       <div class="grid_8 alpha">
         <h3>Monitors</h3>
-        <ul>
-          <li><a href="monitor_alpha0e0.html">&alpha; = 0e0</a></li>
-          <li><a href="monitor_alpha1e-2.html">&alpha; = 1e-2</a></li>
-          <li><a href="monitor_alpha1e-1.html">&alpha; = 1e-1</a></li>
+        <ul>"""
+for item in figList:
+  code+="""
+          <li><a href="monitor_alpha{}.html">&alpha; = {}</a></li>""".format(item,item)
+code+="""
         </ul>
       </div>
       <div class="grid_8">
         <h3>Videos</h3>
-        <ul>
-          <li><a href="movies_alpha0e0.html">&alpha; = 0e0</a></li>
-          <li><a href="movies_alpha1e-2.html">&alpha; = 1e-2</a></li>
-          <li><a href="movies_alpha1e-1.html">&alpha; = 1e-1</a></li>
+        <ul>"""
+for item in movList:
+  code+="""
+          <li><a href="movies_alpha{}.html">&alpha; = {}</a></li>""".format(item,item)
+code+="""
         </ul>
       </div>
       <div class="grid_8 omega">
@@ -78,7 +96,11 @@ html_menu(){
         <ul>
         </ul>
       </div>
-    </div>
+    </div>"""
+  
+with open("$out","a+") as f:
+  f.write("%s" % code)
+  f.close()
 __EOF
 }
 
@@ -278,7 +300,7 @@ do
   search pngs "$alpha"       # call function to populate the array
   html_head $alpha > $out
   html_header >> $out
-  html_menu >> $out
+  html_menu "${alphaList[@]}" "${alphaMovieList[@]}" 
   if [[ $alpha == '0e0' ]]; then
     html_sideNav0 ${pngs[@]} # This function appends from python 
     echo "Zero"
