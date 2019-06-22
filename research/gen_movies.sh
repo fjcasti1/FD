@@ -20,7 +20,9 @@ for f in glob('movies/*'):
     alphaList.append(alpha)
 __EOF
 )
+
 html_head(){
+  alphaValue="$1"
   cat << __EOF
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +36,7 @@ html_head(){
   <link rel="stylesheet" href="css/monitor.css">
   <script src="js/jquery-3.4.1.min.js"></script>
   <script src="js/navigation.js"></script>
-  <title>Zero Forcing Results</title>
+  <title>Movies &alpha; = $alphaValue</title>
 </head>
 __EOF
 }
@@ -44,7 +46,7 @@ html_header(){
 <body>
   <div class="wrap container_24">
     <header class="clearfix">
-      <h1 class="grid_14">Zero Forcing Results</h1>
+      <h1 class="grid_14">Video Visualization</h1>
       <nav class="grid_10">
         <ul>
           <li><a href="#">Home</a></li>
@@ -224,10 +226,10 @@ __EOF
 }
 
 html_main(){
+  alphaValue="$1"
   cat << __EOF
     <div class="main clearfix">
-      <h5 class="grid_16">Parameters &alpha;=<i>f</i>=0. Sorted by Bo,
-        Re.</h5>
+      <h5 class="grid_16">Parameter &alpha; = $alphaValue. Sorted by Bo, Re, <i>f</i>.</h5>
       <div class="primary grid_24">
         <button class="bodyButton" id="toTopBtn" onclick="topFunction()" title="Go to top"><i class="fa fa-angle-double-up fa-2x"></i></button>
         
@@ -287,6 +289,7 @@ __EOF
         </video>
 __EOF
 }
+
 html_footer(){
   cat << __EOF
       </div>
@@ -310,7 +313,7 @@ search() {
 
 for alpha in ${alphaMovieList[@]}
 do
-  out="testmovies_alpha${alpha}.html"
+  out="movies_alpha${alpha}.html"
   echo "$out"
   search movies "$alpha"       # call function to populate the array
   html_head $alpha > $out
@@ -325,7 +328,7 @@ do
     echo "Not zero"
   fi
 
-  html_main >> $out
+  html_main $alpha >> $out
   
   for mov in ${movies[@]}; do
     html_movies "$mov" >> $out
