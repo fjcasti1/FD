@@ -61,6 +61,7 @@ html_header(){
     </header>
 __EOF
 }
+
 html_menu(){
   declare -a figList=($1)
   declare -a movList=($2)
@@ -225,15 +226,17 @@ __EOF
 }
 
 html_main(){
+  alphaValue="$1"
   cat << __EOF
     <div class="main clearfix">
-      <h5 class="grid_16">Parameter &alpha;=0. Sorted by Bo, Re, <i>f</i>.</h5>
+      <h5 class="grid_16">Parameter &alpha; = $alphaValue. Sorted by Bo, Re, <i>f</i>.</h5>
       <div class="primary grid_24">
         <button class="bodyButton" id="toTopBtn" onclick="topFunction()" title="Go to top"><i class="fa fa-angle-double-up fa-2x"></i></button>
         
         <button class="bodyButton" id="opnSideNavBtn" onclick="openNav()"><i class="fa fa-search fa-lg"></i></button>
 __EOF
 }
+
 html_figures(){
   rec="$1"
   str=$(python << __EOF
@@ -273,6 +276,7 @@ __EOF
 
 __EOF
 }
+
 html_footer(){
   cat << __EOF
       </div>
@@ -282,6 +286,7 @@ html_footer(){
 </html>
 __EOF
 }
+
 search() {
   local -n arr=$1              # use nameref for indirection
   alphaValue="${2}"
@@ -301,6 +306,7 @@ do
   html_head $alpha > $out
   html_header >> $out
   html_menu "${alphaList[@]}" "${alphaMovieList[@]}" 
+
   if [[ $alpha == '0e0' ]]; then
     html_sideNav0 ${pngs[@]} # This function appends from python 
     echo "Zero"
@@ -308,7 +314,8 @@ do
     html_sideNav ${pngs[@]} # This function appends from python 
     echo "Not zero"
   fi
-  html_main >> $out
+
+  html_main $alpha >> $out
   
   for png in ${pngs[@]}; do
     html_figures "$png" >> $out
