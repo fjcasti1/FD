@@ -244,6 +244,7 @@ __EOF
 html_movies(){
   rec="$1"
   str=$(python << __EOF
+import numpy as np
 name = "$rec".strip('.mp4')
 tokens = ['alpha','Bo', 'Re','f']
 values = dict()
