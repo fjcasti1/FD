@@ -256,7 +256,8 @@ else:
 if values['alpha'] == '0e0':
   print('<b id="Bo{}_Re{}">&alpha; = {} | Bo = {} | Re = {} | <i>f</i> = {}</b>'.format(values["Bo"],values["Re"],values["alpha"],values["Bo"],values["Re"],ftitle))
 else:
-  print('<b id="Bo{}_Re{}_f{}">&alpha; = {} | Bo = {} | Re = {} | <i>f</i> = {}</b>'.format(values["Bo"],values["Re"],values["f"],values["alpha"],values["Bo"],values["Re"],ftitle))
+  omegatitle = str(round(2*np.pi*float(ftitle),4))
+  print('<b id="Bo{}_Re{}_f{}">&alpha; = {} | Bo = {} | Re = {} | <i>f</i> = {} | &omega; = {}</b>'.format(values["Bo"],values["Re"],values["f"],values["alpha"],values["Bo"],values["Re"],ftitle,omegatitle))
 __EOF
 2>&1)
   cat << __EOF
