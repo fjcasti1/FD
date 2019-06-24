@@ -3,21 +3,27 @@
 declare -a alphaList=$(python <<__EOF
 from glob import glob
 alphaList=[]
+D = {}
 for f in glob('imgs/*'):
   alpha = f.split('alpha')[-1].split('_')[0]
   if alpha not in alphaList:
-    print(alpha)
     alphaList.append(alpha)
+    D[str(float(alpha))] = alpha
+for i in sorted(D):
+  print(D[i])
 __EOF
 )
 declare -a alphaMovieList=$(python <<__EOF
 from glob import glob
 alphaList=[]
+D = {}
 for f in glob('movies/*'):
   alpha = f.split('alpha')[-1].split('_')[0]
   if alpha not in alphaList:
-    print(alpha)
     alphaList.append(alpha)
+    D[str(float(alpha))] = alpha
+for i in sorted(D):
+  print(D[i])
 __EOF
 )
 
@@ -67,9 +73,7 @@ html_menu(){
   declare -a movList=($2)
   python << __EOF
 figList="${figList[@]}".split()
-figList.sort()
 movList="${movList[@]}".split()
-movList.sort()
 code = """    <div class="menu clearfix" id="MegaMenu">
       <div class="header">
         <h1>Knife Edge Viscosimeter</h1>
@@ -307,7 +311,7 @@ search() {
 # are the same, written exactly the same. Example:
 #   Bo = 1e1, Re = 1e1  --> Does not work well
 #   Bo = 1e1, Re = 10e0 --> Works well!
-  movies=$(find movies/ -type f -iname "*alpha${alphaValue}*.mp4" -not -iname '*pert*' -exec basename {} \; | awk 'BEGIN{FS="_"} {gsub("Bo","",$0); gsub("Re","",$0); gsub("f","",$0); gsub($1,"",$0); print $0}'| sort -t "_" -gk 3,3 -k 2,2 -k 1,1 -k 4,4 | uniq | awk 'BEGIN{FS="_"} {gsub($2,"Re"$2,$0); gsub($3,"Bo"$3,$0); gsub($5,"f"$5,$0); gsub($1,"",$0); print $0}')
+  movies=$(find movies/ -type f -iname "*alpha${alphaValue}*.mp4" -not -iname '*pert*' -exec basename {} \; | awk 'BEGIN{FS="_"} {gsub("Bo","",$0); gsub("Re","",$0); gsub("f","",$0); gsub($1,"",$0); print $0}'| sort -t "_" -gk 3,3 -k 2,2 -k 1,1 -k 4,4 | uniq | awk 'BEGIN{FS="_"} {gsub($2,"Re"$2,$0); gsub($3,"Bo"$3,$0); gsub($5,"f"$5,$0); gsub($1,"",$0); gsub("alphaBo","alpha",$0); print $0}')
   IFS=$'\n' arr=($movies)
 }
 
