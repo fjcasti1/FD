@@ -293,6 +293,10 @@ __EOF
           <source src="movies/g_pert${rec}"
             type="video/mp4">
         </video>
+        <video class="grid_24" autoplay muted loop controls id="myVideo">
+          <source src="movies/surf_v${rec}"
+            type="video/mp4">
+        </video>
 __EOF
 }
 
@@ -313,7 +317,7 @@ search() {
 # are the same, written exactly the same. Example:
 #   Bo = 1e1, Re = 1e1  --> Does not work well
 #   Bo = 1e1, Re = 10e0 --> Works well!
-  movies=$(find movies/ -type f -iname "*alpha${alphaValue}*.mp4" -not -iname '*pert*' -exec basename {} \; | awk 'BEGIN{FS="_"} {gsub("Bo","",$0); gsub("Re","",$0); gsub("f","",$0); gsub($1,"",$0); print $0}'| sort -t "_" -gk 3,3 -k 2,2 -k 1,1 -k 4,4 | uniq | awk 'BEGIN{FS="_"} {gsub($2,"Re"$2,$0); gsub($3,"Bo"$3,$0); gsub($5,"f"$5,$0); gsub($1,"",$0); gsub("alphaBo","alpha",$0); print $0}')
+  movies=$(find movies/ -type f -iname "*alpha${alphaValue}*.mp4" -not -iname '*pert*' -not -iname '*surf*' -exec basename {} \; | awk 'BEGIN{FS="_"} {gsub("Bo","",$0); gsub("Re","",$0); gsub("f","",$0); gsub($1,"",$0); print $0}'| sort -t "_" -gk 3,3 -k 2,2 -k 1,1 -k 4,4 | uniq | awk 'BEGIN{FS="_"} {gsub($2,"Re"$2,$0); gsub($3,"Bo"$3,$0); gsub($5,"f"$5,$0); gsub($1,"",$0); gsub("alphaBo","alpha",$0); print $0}')
   IFS=$'\n' arr=($movies)
 }
 
