@@ -182,9 +182,9 @@ def writeDropdownContent1(Bo,Re):
         <div class="dropdown-container2">""".format(Bo,Re,Re)
   return code
 
-def writeDropdownContent2(Bo,Re,f):
+def writeDropdownContent2(Bo,Re,w):
   code = """
-          <a href="#Bo{}_Re{}_f{}">f = {}</a>""".format(Bo,Re,f,f)
+          <a href="#Bo{}_Re{}_w{}">&omega;<sub>f</sub> = {}</a>""".format(Bo,Re,w,w)
   return code
 
 input = "${arr[@]}"
@@ -199,16 +199,16 @@ code+= writeDropdownBtn(Bo)
 code+= writeDropdownContent1(Bo,Re)
 
 for item in list:
-  f = getValue('f',item)
+  w = getValue('w',item)
   if Bo == getValue('Bo',item):
     if Re == getValue('Re',item):
-      code+= writeDropdownContent2(Bo,Re,f)
+      code+= writeDropdownContent2(Bo,Re,w)
     else:
       Re = getValue('Re',item)
       code+="""
         </div>"""
       code+= writeDropdownContent1(Bo,Re)
-      code+= writeDropdownContent2(Bo,Re,f)
+      code+= writeDropdownContent2(Bo,Re,w)
   else:
     Bo = getValue('Bo',item)
     Re = getValue('Re',item)
@@ -217,7 +217,7 @@ for item in list:
       </div>"""
     code+= writeDropdownBtn(Bo)
     code+= writeDropdownContent1(Bo,Re)
-    code+= writeDropdownContent2(Bo,Re,f)
+    code+= writeDropdownContent2(Bo,Re,w)
 code+="""
         </div>
       </div>
@@ -233,7 +233,8 @@ html_main(){
   alphaValue="$1"
   cat << __EOF
     <div class="main clearfix">
-      <h5 class="grid_16">Parameter &alpha; = $alphaValue. Sorted by Bo, Re, <i>f</i>.</h5>
+      <h5 class="grid_16">Parameter &alpha; = $alphaValue. Sorted by Bo,
+      Re, &omega;.</h5>
       <div class="primary grid_24">
         <button class="bodyButton" id="toTopBtn" onclick="topFunction()" title="Go to top"><i class="fa fa-angle-double-up fa-2x"></i></button>
         
@@ -246,19 +247,18 @@ html_figures(){
   str=$(python << __EOF
 import numpy as np
 name = "$rec".strip('.png')
-tokens = ['alpha','Bo', 'Re','f']
+tokens = ['alpha','Bo', 'Re','w']
 values = dict()
 for token in tokens:
   values[token] = name.split(token)[-1].split('_')[0]
-if values['f'] == '0e0':
-  ftitle = '0'
+if values['w'] == '0e0':
+  wtitle = '0'
 else:
-  ftitle = values['f'].lstrip('0')
-if values['alpha'] == '0e0':
-  print('<b id="Bo{}_Re{}">&alpha; = {} | Bo = {} | Re = {} | <i>f</i> = {}</b>'.format(values["Bo"],values["Re"],values["alpha"],values["Bo"],values["Re"],ftitle))
+  wtitle = values['w'].lstrip('0')
+if values['alpha'] == '0e0': 
+  print('<b id="Bo{}_Re{}">&alpha; = {} | Bo = {} | Re = {} | &omega;<sub>f</sub> = {}</b>'.format(values["Bo"],values["Re"],values["alpha"],values["Bo"],values["Re"],wtitle))
 else:
-  omegatitle = str(round(2*np.pi*float(ftitle),4))
-  print('<b id="Bo{}_Re{}_f{}">&alpha; = {} | Bo = {} | Re = {} | <i>f</i> = {} | &omega; = {}</b>'.format(values["Bo"],values["Re"],values["f"],values["alpha"],values["Bo"],values["Re"],ftitle,omegatitle))
+  print('<b id="Bo{}_Re{}_w{}">&alpha; = {} | Bo = {} | Re = {} | &omega;<sub>f</sub> = {}</b>'.format(values["Bo"],values["Re"],values["w"],values["alpha"],values["Bo"],values["Re"],wtitle))
 __EOF
 2>&1)
   cat << __EOF
@@ -300,7 +300,7 @@ search() {
 # are the same, written exactly the same. Example:
 #   Bo = 1e1, Re = 1e1  --> Does not work well
 #   Bo = 1e1, Re = 10e0 --> Works well!
-  pngs=$(find imgs -type f -iname "*alpha${alphaValue}*.png" -exec basename {} \; | awk 'BEGIN{FS="_"} {gsub("Bo","",$0); gsub("Re","",$0); gsub("f","",$0); gsub($1,"",$0); print $0}'| sort -t "_" -gk 3,3 -k 2,2 -k 1,1 -k 4,4 | uniq | awk 'BEGIN{FS="_"} {gsub($2,"Re"$2,$0); gsub($3,"Bo"$3,$0); gsub($5,"f"$5,$0); gsub($1,"",$0); gsub("alphaBo","alpha",$0); print $0}')
+  pngs=$(find imgs -type f -iname "*alpha${alphaValue}*.png" -exec basename {} \; | awk 'BEGIN{FS="_"} {gsub("Bo","",$0); gsub("Re","",$0); gsub("w","",$0); gsub($1,"",$0); print $0}'| sort -t "_" -gk 3,3 -k 2,2 -k 1,1 -k 4,4 | uniq | awk 'BEGIN{FS="_"} {gsub($2,"Re"$2,$0); gsub($3,"Bo"$3,$0); gsub($5,"w"$5,$0); gsub($1,"",$0); gsub("alphaBo","alpha",$0); print $0}')
   IFS=$'\n' arr=($pngs)
 }
 
