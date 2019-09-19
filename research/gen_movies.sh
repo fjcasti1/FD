@@ -162,7 +162,7 @@ html_sideNav(){
   arr=("$@")
   python << __EOF
 def getValue(token,str):
-  return str.strip('.png').split(token)[-1].split('_')[0]
+  return str.strip('.mp4').split(token)[-1].split('_')[0]
 
 def writeDropdownBtn(Bo):
   code = """
@@ -182,9 +182,9 @@ def writeDropdownContent1(Bo,Re):
         <div class="dropdown-container2">""".format(Bo,Re,Re)
   return code
 
-def writeDropdownContent2(Bo,Re,f):
+def writeDropdownContent2(Bo,Re,wf):
   code = """
-          <a href="#Bo{}_Re{}_f{}">f = {}</a>""".format(Bo,Re,f,f)
+          <a href="#Bo{}_Re{}_wf{}">&omega;<sub>f</sub> = {}</a>""".format(Bo,Re,wf,wf)
   return code
 
 input = "${arr[@]}"
@@ -199,16 +199,16 @@ code+= writeDropdownBtn(Bo)
 code+= writeDropdownContent1(Bo,Re)
 
 for item in list:
-  f = getValue('f',item)
+  wf = getValue('wf',item)
   if Bo == getValue('Bo',item):
     if Re == getValue('Re',item):
-      code+= writeDropdownContent2(Bo,Re,f)
+      code+= writeDropdownContent2(Bo,Re,wf)
     else:
       Re = getValue('Re',item)
       code+="""
         </div>"""
       code+= writeDropdownContent1(Bo,Re)
-      code+= writeDropdownContent2(Bo,Re,f)
+      code+= writeDropdownContent2(Bo,Re,wf)
   else:
     Bo = getValue('Bo',item)
     Re = getValue('Re',item)
@@ -217,7 +217,7 @@ for item in list:
       </div>"""
     code+= writeDropdownBtn(Bo)
     code+= writeDropdownContent1(Bo,Re)
-    code+= writeDropdownContent2(Bo,Re,f)
+    code+= writeDropdownContent2(Bo,Re,wf)
 code+="""
         </div>
       </div>
@@ -233,7 +233,7 @@ html_main(){
   alphaValue="$1"
   cat << __EOF
     <div class="main clearfix">
-      <h5 class="grid_16">Parameter &alpha; = $alphaValue. Sorted by Bo, Re, <i>f</i>.</h5>
+      <h5 class="grid_16">Parameter &alpha; = $alphaValue. Sorted by Bo, Re, &omega;<sub>f</sub>.</h5>
       <div class="primary grid_24">
         <button class="bodyButton" id="toTopBtn" onclick="topFunction()" title="Go to top"><i class="fa fa-angle-double-up fa-2x"></i></button>
         
@@ -246,19 +246,20 @@ html_movies(){
   str=$(python << __EOF
 import numpy as np
 name = "$rec".strip('.mp4')
-tokens = ['alpha','Bo', 'Re','f']
+tokens = ['alpha','Bo', 'Re','wf']
 values = dict()
 for token in tokens:
   values[token] = name.split(token)[-1].split('_')[0]
-if values['f'] == '0e0':
-  ftitle = '0'
+
+if values['wf'] == '0e0':
+  wftitle = '0'
 else:
-  ftitle = values['f'].lstrip('0')
+  wftitle = values['wf'].lstrip('0')
+
 if values['alpha'] == '0e0':
-  print('<b id="Bo{}_Re{}">&alpha; = {} | Bo = {} | Re = {} | <i>f</i> = {}</b>'.format(values["Bo"],values["Re"],values["alpha"],values["Bo"],values["Re"],ftitle))
+  print('<b id="Bo{}_Re{}">&alpha; = {} | Bo = {} | Re = {} </b>'.format(values["Bo"],values["Re"],values["alpha"],values["Bo"],values["Re"]))
 else:
-  omegatitle = str(round(2*np.pi*float(ftitle),4))
-  print('<b id="Bo{}_Re{}_f{}">&alpha; = {} | Bo = {} | Re = {} | <i>f</i> = {} | &omega; = {}</b>'.format(values["Bo"],values["Re"],values["f"],values["alpha"],values["Bo"],values["Re"],ftitle,omegatitle))
+  print('<b id="Bo{}_Re{}_wf{}">&alpha; = {} | Bo = {} | Re = {} | &omega;<sub>f</sub> = {}</b>'.format(values["Bo"],values["Re"],values["wf"],values["alpha"],values["Bo"],values["Re"],wftitle))
 __EOF
 2>&1)
   cat << __EOF
@@ -317,7 +318,7 @@ search() {
 # are the same, written exactly the same. Example:
 #   Bo = 1e1, Re = 1e1  --> Does not work well
 #   Bo = 1e1, Re = 10e0 --> Works well!
-  movies=$(find movies/ -type f -iname "*alpha${alphaValue}*.mp4" -not -iname '*pert*' -not -iname '*surf*' -exec basename {} \; | awk 'BEGIN{FS="_"} {gsub("Bo","",$0); gsub("Re","",$0); gsub("f","",$0); gsub($1,"",$0); print $0}'| sort -t "_" -gk 3,3 -k 2,2 -k 1,1 -k 4,4 | uniq | awk 'BEGIN{FS="_"} {gsub($2,"Re"$2,$0); gsub($3,"Bo"$3,$0); gsub($5,"f"$5,$0); gsub($1,"",$0); gsub("alphaBo","alpha",$0); print $0}')
+  movies=$(find movies/ -type f -iname "*alpha${alphaValue}*.mp4" -not -iname '*pert*' -not -iname '*surf*' -exec basename {} \; | awk 'BEGIN{FS="_"} {gsub("Bo","",$0); gsub("Re","",$0); gsub("wf","",$0); gsub($1,"",$0); print $0}'| sort -t "_" -gk 3,3 -k 2,2 -k 1,1 -k 4,4 | uniq | awk 'BEGIN{FS="_"} {gsub($2,"Re"$2,$0); gsub($3,"Bo"$3,$0); gsub($5,"wf"$5,$0); gsub($1,"",$0); gsub("alphaBo","alpha",$0); print $0}')
   IFS=$'\n' arr=($movies)
 }
 
@@ -325,11 +326,15 @@ for alpha in ${alphaMovieList[@]}
 do
   out="movies_alpha${alpha}.html"
   echo "$out"
+  echo "Searching movies"
   search movies "$alpha"       # call function to populate the array
+  echo "Writing Head"
   html_head $alpha > $out
+  echo "Writing Header"
   html_header >> $out
+  echo "Writing Menu"
   html_menu "${alphaList[@]}" "${alphaMovieList[@]}" 
-
+  echo "Writing sideNav" 
   if [[ $alpha == '0e0' ]]; then
     html_sideNav0 ${movies[@]} # This function appends from python 
     echo "Zero"
@@ -337,13 +342,14 @@ do
     html_sideNav ${movies[@]} # This function appends from python 
     echo "Not zero"
   fi
-
-  html_main $alpha >> $out
   
+  echo "Writing Main"
+  html_main $alpha >> $out
+  echo "Writing Movies"
   for mov in ${movies[@]}; do
     html_movies "$mov" >> $out
   done
-  
+  echo "Writin Footer"
   html_footer >> $out
     
   echo "$out DONE"
