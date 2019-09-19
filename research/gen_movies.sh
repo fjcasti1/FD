@@ -162,7 +162,7 @@ html_sideNav(){
   arr=("$@")
   python << __EOF
 def getValue(token,str):
-  return str.strip('.mp4').split(token)[-1].split('_')[0]
+  return str.split('.mp4')[0].split(token)[-1].split('_')[0]
 
 def writeDropdownBtn(Bo):
   code = """
@@ -245,7 +245,7 @@ html_movies(){
   rec="$1"
   str=$(python << __EOF
 import numpy as np
-name = "$rec".strip('.mp4')
+name = "$rec".split('.mp4')[0]
 tokens = ['alpha','Bo', 'Re','wf']
 values = dict()
 for token in tokens:
