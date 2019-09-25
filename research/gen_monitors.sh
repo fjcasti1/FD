@@ -199,16 +199,16 @@ code+= writeDropdownBtn(Bo)
 code+= writeDropdownContent1(Bo,Re)
 
 for item in list:
-  w = getValue('w',item)
+  wf = getValue('wf',item)
   if Bo == getValue('Bo',item):
     if Re == getValue('Re',item):
-      code+= writeDropdownContent2(Bo,Re,w)
+      code+= writeDropdownContent2(Bo,Re,wf)
     else:
       Re = getValue('Re',item)
       code+="""
         </div>"""
       code+= writeDropdownContent1(Bo,Re)
-      code+= writeDropdownContent2(Bo,Re,w)
+      code+= writeDropdownContent2(Bo,Re,wf)
   else:
     Bo = getValue('Bo',item)
     Re = getValue('Re',item)
@@ -217,7 +217,7 @@ for item in list:
       </div>"""
     code+= writeDropdownBtn(Bo)
     code+= writeDropdownContent1(Bo,Re)
-    code+= writeDropdownContent2(Bo,Re,w)
+    code+= writeDropdownContent2(Bo,Re,wf)
 code+="""
         </div>
       </div>
@@ -247,18 +247,18 @@ html_figures(){
   str=$(python << __EOF
 import numpy as np
 name = "$rec".strip('.png')
-tokens = ['alpha','Bo', 'Re','w']
+tokens = ['alpha','Bo', 'Re','wf']
 values = dict()
 for token in tokens:
   values[token] = name.split(token)[-1].split('_')[0]
-if values['w'] == '0e0':
+if values['wf'] == '0e0':
   wtitle = '0'
 else:
-  wtitle = values['w'].lstrip('0')
+  wtitle = values['wf'].lstrip('0')
 if values['alpha'] == '0e0': 
   print('<b id="Bo{}_Re{}">&alpha; = {} | Bo = {} | Re = {} | &omega;<sub>f</sub> = {}</b>'.format(values["Bo"],values["Re"],values["alpha"],values["Bo"],values["Re"],wtitle))
 else:
-  print('<b id="Bo{}_Re{}_w{}">&alpha; = {} | Bo = {} | Re = {} | &omega;<sub>f</sub> = {}</b>'.format(values["Bo"],values["Re"],values["w"],values["alpha"],values["Bo"],values["Re"],wtitle))
+  print('<b id="Bo{}_Re{}_w{}">&alpha; = {} | Bo = {} | Re = {} | &omega;<sub>f</sub> = {}</b>'.format(values["Bo"],values["Re"],values["wf"],values["alpha"],values["Bo"],values["Re"],wtitle))
 __EOF
 2>&1)
   cat << __EOF
